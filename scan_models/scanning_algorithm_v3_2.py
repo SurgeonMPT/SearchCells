@@ -16,7 +16,7 @@ class ScanningAlgorithmV32:
         self.size_pixel = data['size_pixel']
 
     # Plot the image
-    def imshow(self,img, ax=None):
+    def imshow(self, img, ax=None):
         if ax is None:
             ret, encoded = cv2.imencode(".jpg", img)
             cv2.imshow("Blue image", encoded)

@@ -8,7 +8,7 @@ from skimage.feature import peak_local_max
 
 
 # Функция для определения центров клеток
-def detect_nuclei(img, sigma=5, min_distance=2, threshold_abs=80):
+def detect_nuclei(img, sigma=5.5, min_distance=2, threshold_abs=160):
     g = gaussian(img, sigma, preserve_range=True)
     peaks = peak_local_max(g, min_distance, threshold_abs, exclude_border=False)
     return peaks
