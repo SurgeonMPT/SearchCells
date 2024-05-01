@@ -1,4 +1,5 @@
 # https://python-school.ru/blog/python/find-nuclei-with-skimage/
+# Находит ядра, исправно (проблема только с клетками, где явно выделено несколько центров, но решена проблема слипшихся)
 from glob import glob
 import cv2
 from skimage import io
@@ -17,7 +18,7 @@ def detect_nuclei(img, sigma=5.5, min_distance=2, threshold_abs=110):
 # Главная функция
 def main():
     # Загружаем изображения
-    paths = glob('5a-50lum-10x-365-2.tif')
+    paths = glob('contrast_stretch.jpg')
     paths.sort()
     if not paths:
         return
