@@ -1,7 +1,7 @@
 # Импорт библиотек
 import sys
 from PyQt5.QtWidgets import QApplication
-from classes.main_window import MainWindow
+from bin.window_main import MainWindow
 
 
 # Функция для вывода ошибок, в местах где не выводится
