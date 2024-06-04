@@ -1,3 +1,7 @@
 {
-    "language": "en.json"
+    "language": "en.json",
+    "languages": {
+        "ru.json": "Русский",
+        "en.json": "English"
+    }
 }

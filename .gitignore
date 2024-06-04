@@ -1,5 +1,7 @@
-/CellSearch/CellSearch.exe
+/CellSearch
 .venv
 venv
 /.venv
 CellSearch.exe
+build
+/build
