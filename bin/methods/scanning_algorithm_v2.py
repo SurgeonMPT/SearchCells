@@ -1,3 +1,5 @@
+import os
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -32,7 +34,7 @@ class ScanningAlgorithmV2:
         cv2.fillPoly(stencil, contours_set, color)
         selected_print = cv2.bitwise_and(image_rgb.copy(), stencil)
         cv2.drawContours(selected_print, contours_set, -1, (255, 0, 0), 2)
-        self.print_image(selected_print)
+        # self.print_image(selected_print)
 
     def gaussian(self, sigma, mu, bins, maximum=1):
         val = 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(- (bins - mu) ** 2 / (2 * sigma ** 2))
@@ -183,7 +185,7 @@ class ScanningAlgorithmV2:
         result = cv2.bitwise_and(image_cleared_rgb.copy(), stencil)
 
         result_contoured = cv2.drawContours(result.copy(), contour_set, -1, (255, 0, 0), 2)
-        self.print_image(result_contoured, "full")
+        # self.print_image(result_contoured, "full")
         print(f'{file} cells in the image : {len(contour_set)}')
         return contour_set
 
@@ -232,7 +234,7 @@ class ScanningAlgorithmV2:
         result = cv2.bitwise_and(image_cleared_rgb.copy(), stencil)
 
         result_contoured = cv2.drawContours(result.copy(), contour_set, -1, (255, 0, 0), 2)
-        self.print_image(result_contoured, "full")
+        # self.print_image(result_contoured, "full")
         print(f'{file} cells in the image : {len(contour_set)}')
         return contour_set
 
@@ -248,16 +250,16 @@ class ScanningAlgorithmV2:
             selected_print = cv2.drawContours(selected_.copy(), contours_set[contour_num:contour_num + 1], -1,
                                               (255, 0, 0),
                                               2)
-            self.print_image(selected_print, f'contour #{contour_num}')
+            # self.print_image(selected_print, f'contour #{contour_num}')
 
         return selected_
 
     # Функция для старта сканирования изображения
-    def scan(self, file):
-        self.file = file
-        image_grayscale = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
+    def scan(self, data_params):
+        self.file = data_params['file_to_scan']
+        image_grayscale = cv2.imread(self.file, cv2.IMREAD_GRAYSCALE)
         image_rgb = cv2.cvtColor(image_grayscale, cv2.COLOR_GRAY2RGB)
-        self.print_image(image_grayscale)
+        # self.print_image(image_grayscale)
 
         print(f'Testing {ScanningAlgorithmV2.NAME} method')
 
@@ -328,12 +330,34 @@ class ScanningAlgorithmV2:
         result = cv2.bitwise_and(image_cleared_rgb.copy(), stencil)
 
         result_contoured = cv2.drawContours(result.copy(), contour_set, -1, (255, 0, 0), 2)
-        self.print_image(result_contoured, "full")
-        print(f'{file} cells in the image : {len(contour_set)}')
+        # self.print_image(result_contoured, "full")
+        if data_params['show_image']:
+            plt.figure(f'{self.file}. {data_params["language"]["cells"]}: {len(contour_set)}', figsize=(12, 6))
+            plt.suptitle(f'{self.file}. {data_params["language"]["cells"]}: {len(contour_set)}', fontsize=16)
 
-        plt.savefig('result.png')
+            # Отображение первого изображения
+            plt.subplot(1, 2, 1)
+            plt.imshow(cv2.imread(self.file), cmap='gray')
+            plt.title(f'{data_params["language"]["cells"]}: {len(contour_set)} - img1')
+            plt.axis('off')
+
+            # Отображение второго изображения
+            plt.subplot(1, 2, 2)
+            plt.imshow(result_contoured, cmap='gray')
+            plt.title(f'{data_params["language"]["cells"]}: {len(contour_set)} - img2')
+            plt.axis('off')
+
+            plt.tight_layout()
+            plt.show()
+
+        if data_params['folder_to_save']:
+            save_path = os.path.join(data_params['folder_to_save'],
+                                     f'result_cells_{len(contour_set)}_{os.path.basename(self.file)}')
+            plt.savefig(save_path)
+
         return {
             'method_name': ScanningAlgorithmV2.NAME,
             'contour_set': len(contour_set),
-            'path_file': 'result.png'
+            'path_file': data_params['folder_to_save'] + f'\\result_cells_{len(contour_set)}_' +
+                         os.path.basename(self.file)
         }

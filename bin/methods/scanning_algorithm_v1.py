@@ -258,7 +258,7 @@ class ScanningAlgorithmV1:
         self.file = data_params['file_to_scan']
         image_grayscale = cv2.imread(self.file, cv2.IMREAD_GRAYSCALE)
         image_rgb = cv2.cvtColor(image_grayscale, cv2.COLOR_GRAY2RGB)
-        self.print_image(image_grayscale)
+        # self.print_image(image_grayscale)
 
         print(f'Testing {ScanningAlgorithmV1.NAME} method')
 
@@ -293,7 +293,7 @@ class ScanningAlgorithmV1:
         result = cv2.bitwise_and(image_cleared_rgb.copy(), stencil)
 
         result_contoured = cv2.drawContours(result.copy(), contour_set, -1, (255, 0, 0), 2)
-        self.print_image(result_contoured, "full")
+        # self.print_image(result_contoured, "full")
 
         if data_params['show_image']:
             plt.figure(f'{self.file}. {data_params["language"]["cells"]}: {len(contour_set)}', figsize=(12, 6))

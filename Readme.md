@@ -13,7 +13,7 @@
 
 # Заметки по проекту
 Команда для создания exe файла:
-pyinstaller --onefile --icon="resources/images/icon.ico" --name "CellSearch" --distpath "CellSearch" --windowed --log-level=DEBUG --paths .venv\Lib\site-packages --hidden-import=platformdirs main.py
+pyinstaller --onefile --icon="resources/images/icon.ico" --name "CellsSearch" --distpath "CellsSearch" --windowed --log-level=DEBUG --paths .venv\Lib\site-packages --hidden-import=platformdirs main.py
 
 Формирование файла requirements.txt:
 pip freeze > requirements.txt

@@ -58,7 +58,6 @@ class WindowMethodBase(QMainWindow):
 
             data_params['language'] = self.helper.get_language(self.helper.settings["language"])
             if self.method.dialogParams:
-                print(self.method.dialogParams.params)
                 data_params['dop_params'] = self.method.dialogParams.params
 
             data_params['folder_to_save'] = self.scanToFolderLineEdit.text()
@@ -70,7 +69,7 @@ class WindowMethodBase(QMainWindow):
                     if (os.path.isfile(os.path.join(self.folderToScanLineEdit.text(), filename)) and
                             filename.endswith(self.formatToScanComboBox.currentText()[1:])):
                         files.append(os.path.join(self.folderToScanLineEdit.text(), filename))
-                print(files)
+
                 for i in files:
                     data_params['file_to_scan'] = i
                     result = self.method.scan(data_params)
