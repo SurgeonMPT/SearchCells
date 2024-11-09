@@ -111,7 +111,7 @@ class WindowMethodBase(QMainWindow):
         Функция выбора папки для сканирования
         :return:
         """
-        folder_path = QFileDialog.getExistingDirectory(self, {self.language["choose a folder"]}, "./")
+        folder_path = QFileDialog.getExistingDirectory(self, self.language["choose a folder"], "./")
         if folder_path:
             self.fileToScanLineEdit.setText("")
             self.folderToScanLineEdit.setText(folder_path)
@@ -151,10 +151,10 @@ class WindowMethodBase(QMainWindow):
                 self.scanButton.setText(value)
 
             if key == "file to scan":
-                self.fileToScanLabel.setText(value)
+                self.fileToScanLabel.setText(value + ":")
 
             if key == "folder to scan":
-                self.fileToScanLabel.setText(value)
+                self.folderToScanLabel.setText(value + ":")
 
             if key == "method":
                 self.methodLabel.setText(value + ":")

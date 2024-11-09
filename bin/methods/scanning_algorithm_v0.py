@@ -236,7 +236,7 @@ class ScanningAlgorithmV0:
         result = cv2.bitwise_and(image_cleared_rgb.copy(), stencil)
 
         result_contoured = cv2.drawContours(result.copy(), contour_set, -1, (255, 0, 0), 2)
-        self.print_image(result_contoured, "full")
+        # self.print_image(result_contoured, "full")
         print(f'{file} cells in the image : {len(contour_set)}')
         return (contour_set, result_contoured)
 

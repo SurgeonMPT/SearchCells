@@ -1,11 +1,10 @@
 import os
 import cv2
-from glob import glob
 
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog
-from skimage import io
+# from skimage import io
 import matplotlib.pyplot as plt
 from skimage.filters import gaussian
 from skimage.feature import peak_local_max
@@ -39,8 +38,8 @@ class ScanningAlgorithmV5:
         file = data_params['file_to_scan']
         print(f'Testing {ScanningAlgorithmV5.NAME} method')
 
-        img1 = io.imread(file)
-
+        img1 = cv2.imread(file)
+        img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
         gray_img = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
         print(img1.shape, img1.dtype, img1.min(), img1.max())
 
@@ -109,8 +108,8 @@ class DialogParamsMethod(QDialog):
         uic.loadUi('./resources/templates/dialog_scanning_algorithm_v5.ui', self)
         self.setWindowIcon(QIcon('./resources/images/icon.ico'))
         self.sigmaDoubleSpinBox.setValue(self.params["sigma"])
-        self.minDistanceDoubleSpinBox.setValue(self.params["min distance"])
-        self.thresholdAbsDoubleSpinBox.setValue(self.params["threshold abs"])
+        self.minDistanceSpinBox.setValue(self.params["min distance"])
+        self.thresholdAbsSpinBox.setValue(self.params["threshold abs"])
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
 
@@ -145,7 +144,7 @@ class DialogParamsMethod(QDialog):
         """
         self.params = {
             'sigma': self.sigmaDoubleSpinBox.value(),
-            'min distance': self.minDistanceDoubleSpinBox.value(),
-            'threshold abs': self.thresholdAbsDoubleSpinBox.value(),
+            'min distance': self.minDistanceSpinBox.value(),
+            'threshold abs': self.thresholdAbsSpinBox.value(),
         }
         super().accept()
